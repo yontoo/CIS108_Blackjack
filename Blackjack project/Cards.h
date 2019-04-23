@@ -1,12 +1,20 @@
 #pragma once
-
+#include <string>
 
 class Card
 {
 public:
-	Card();
+	Card(int, char);			//I don't think I need a default constructor since I will only be making cards with data from other objects.
+	Card(Card&);			
 	~Card();
+	void FullCard();
 
+
+private:
+	std::string full_card;
+	int card_val;
+	int card_suit;
+	char card_rank;
 	enum Values
 	{
 		ACE = 1,
@@ -19,10 +27,6 @@ public:
 		EIGHT,
 		NINE,
 		TEN,
-		JACK = 10,
-		QUEEN = 10,
-		KING = 10,
-		ACE2, //Option used later for if player decides to use ACE as an 11.
 	};
 	enum Suit
 	{
@@ -32,6 +36,6 @@ public:
 		HEARTS
 	};
 
-
+	int GiveValue();
 };
 
