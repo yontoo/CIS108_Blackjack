@@ -60,7 +60,7 @@ void Deck::FillDeck()
 		}
 		case 10:
 		{
-			rank = '10';
+			rank = '0';
 			break;
 		}
 		case 11:
@@ -80,10 +80,15 @@ void Deck::FillDeck()
 		}
 		for (int suit = 0; suit <= 3; suit++)
 		{
-			deck.push_back(std::make_unique<Card>(suit, rank));
+			deck.push_back(std::make_shared<Card>(suit, rank));
 		}
 	}
 
+}
+
+void Deck::ShuffleDeck()
+{
+	std::random_shuffle(deck.begin(), deck.end());
 }
 
 

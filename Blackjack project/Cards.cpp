@@ -7,7 +7,7 @@ int Card::GiveValue()
 	{
 		return ACE;
 	}
-	else if (card_rank == 'K' || card_rank == 'Q' || card_rank == 'J' || card_rank == '10')
+	else if (card_rank == 'K' || card_rank == 'Q' || card_rank == 'J' || card_rank == '0')
 	{
 		return TEN;
 	}
@@ -52,6 +52,10 @@ void Card::FullCard()
 	if (card_rank == 'A')
 	{
 		std::cout << "Ace";
+	}
+	else if (card_rank == '0')
+	{
+		std::cout << "10";
 	}
 	else if (card_rank == 'K')
 	{
