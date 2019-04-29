@@ -12,6 +12,9 @@ public:
 private:
 	int bet;
 	int cash;
+
+	void MakeBet();
+	void Hit();
 	
 
 };

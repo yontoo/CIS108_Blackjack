@@ -5,7 +5,8 @@ class Card
 {
 public:
 	Card(int, char);			//I don't think I need a default constructor since I will only be making cards with data from other objects.
-	Card(Card&);			
+	Card(const Card&);			//Copy constructor
+	Card();
 	~Card();
 	void FullCard();
 

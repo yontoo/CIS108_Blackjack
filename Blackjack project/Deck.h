@@ -8,7 +8,8 @@ public:
 	std::vector<std::shared_ptr<Card>> deck;
 	void FillDeck();
 	void ShuffleDeck();
+	Card GiveCard();
 	Deck();
-	~Deck();
+	virtual ~Deck() = default;
 };
 

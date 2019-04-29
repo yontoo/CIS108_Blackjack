@@ -2,8 +2,7 @@
 
 void Hand::GetCard(Deck DeckIn)
 {
-	std::move(DeckIn.deck.begin(), DeckIn.deck.begin() + 1, curr_hand.begin());
-	DeckIn.deck.erase(DeckIn.deck.begin(), DeckIn.deck.begin() + 1);
+	curr_hand.push_back(std::move(DeckIn.GiveCard()));
 }
 
 Hand::Hand()
@@ -11,6 +10,3 @@ Hand::Hand()
 }
 
 
-Hand::~Hand()
-{
-}

@@ -1,14 +1,16 @@
 #include "Cards.h"
 #include "Deck.h"
 #include <vector>
+#include <assert.h>
+#include <functional>
 
 #pragma once
 class Hand
 {
 public:
-	std::vector<std::shared_ptr<Card>> curr_hand;
+	std::vector<Card> curr_hand;
 	Hand();
-	~Hand();
+	virtual ~Hand() = default;
 	void GetCard(Deck);
 	void GetCard(int, Deck);
 };

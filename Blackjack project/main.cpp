@@ -12,33 +12,24 @@ int main()
 	bool game_started = false;
 	Deck deckone;
 	deckone.FillDeck();
+	deckone.ShuffleDeck();
 	while (game_started = false);
 	{
 		if (begin == ' ')
 		{
 			game_started = true;
 			Hand Player;
-			Player.GetCard(deckone);
 			for (int x = 0; x < 2; x++)
 			{
-				Player.curr_hand[x]->FullCard();
+				Player.GetCard(deckone);
+				deckone.deck.erase(deckone.deck.begin());
+				Player.curr_hand[x].FullCard();
 			}
 		}
 		else
 		{
 			game_started = false;
 		}
-	}
-
-	for (int x = 0; x < deckone.deck.size(); x++)
-	{
-		deckone.deck[x]->FullCard();
-	}
-	deckone.ShuffleDeck();
-	std::cout << "-------------------------------" << std::endl;
-	for (int x = 0; x < deckone.deck.size(); x++)
-	{
-		deckone.deck[x]->FullCard();
 	}
 	system("pause");
 	return 0;

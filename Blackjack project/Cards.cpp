@@ -1,6 +1,7 @@
 #include "Cards.h"
 #include <iostream>
 
+
 int Card::GiveValue()
 {
 	if (card_rank == 'A')
@@ -25,7 +26,7 @@ Outputs a cards rank and suit to the player.
 void Card::FullCard()
 {
 	Suit SuitSwitch;
-	SuitSwitch = static_cast<Suit>(card_suit);
+	SuitSwitch = static_cast<Suit>(card_suit);		//Can't implicitly cast to enum from int.
 	switch (SuitSwitch)
 	{
 	case SPADES:
@@ -82,6 +83,14 @@ Card::Card(int suit, char card_rank_in)
 	card_rank = card_rank_in;
 	card_val = GiveValue();
 	card_suit = suit;
+}
+
+Card::Card(const Card & old_card)
+{
+	card_rank = old_card.card_rank;
+	card_val = old_card.card_val;
+	card_suit = old_card.card_suit;
+	
 }
 
 

@@ -91,7 +91,11 @@ void Deck::ShuffleDeck()
 	std::random_shuffle(deck.begin(), deck.end());
 }
 
-
-Deck::~Deck()
+Card Deck::GiveCard()
 {
+
+	return(*deck[0]);
 }
+
+
+
