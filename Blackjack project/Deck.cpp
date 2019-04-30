@@ -88,7 +88,14 @@ void Deck::FillDeck()
 
 void Deck::ShuffleDeck()
 {
-	std::random_shuffle(deck.begin(), deck.end());
+	auto rng = std::default_random_engine{static_cast<unsigned int>(time(NULL))};
+	std::shuffle(std::begin(deck), std::end(deck), rng);
+}
+
+void Deck::InitDeck()
+{
+	FillDeck();
+	ShuffleDeck();
 }
 
 Card Deck::GiveCard()

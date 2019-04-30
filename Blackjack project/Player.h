@@ -6,6 +6,10 @@ class Player
 public:
 	Player();
 	~Player();
+	void InitPlayer(Deck);
+	void ShowHand();
+protected:
+	Hand PlayerHand;
 
 
 

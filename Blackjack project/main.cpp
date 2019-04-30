@@ -3,6 +3,7 @@
 #include "Cards.h"
 #include "Deck.h"
 #include "Hand.h"
+#include "Player.h"
 
 
 int main()
@@ -11,20 +12,17 @@ int main()
 	char begin = _getch();
 	bool game_started = false;
 	Deck deckone;
-	deckone.FillDeck();
-	deckone.ShuffleDeck();
+	deckone.InitDeck();
 	while (game_started = false);
 	{
 		if (begin == ' ')
 		{
+			Player User;
+			User.InitPlayer(deckone);
+			deckone.deck.erase(deckone.deck.begin());
+			deckone.deck.erase(deckone.deck.begin());
+			User.ShowHand();
 			game_started = true;
-			Hand Player;
-			for (int x = 0; x < 2; x++)
-			{
-				Player.GetCard(deckone);
-				deckone.deck.erase(deckone.deck.begin());
-				Player.curr_hand[x].FullCard();
-			}
 		}
 		else
 		{
