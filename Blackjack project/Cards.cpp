@@ -78,6 +78,11 @@ void Card::FullCard()
 	std::cout << " of " << full_card << std::endl;
 }
 
+int Card::GetVal()
+{
+	return card_val;
+}
+
 Card::Card(int suit, char card_rank_in)
 {
 	card_rank = card_rank_in;

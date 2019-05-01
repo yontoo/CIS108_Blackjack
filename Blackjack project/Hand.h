@@ -11,7 +11,7 @@ public:
 	std::vector<Card> curr_hand;
 	Hand();
 	virtual ~Hand() = default;
-	void GetCard(Deck);
+	void GetCard(Deck *);
 	void GetCard(int, Deck);
 };
 
