@@ -1,5 +1,6 @@
 #include "Cards.h"
 #include "Player.h"
+#include <Windows.h>
 #pragma once
 class Dealer : public Player
 {
@@ -9,15 +10,11 @@ public:
 
 	void AddCard();
 	void FillHand();
-	void CheckVicOrLose();
-	void CheckVicOrLose(int);
 	void FlipCard();
 	void GetDeck(Deck *);
-	void Dealerflow();
-
-private:
-	Hand DealerHand;
+	void Dealerflow(Player);
 	int card_to_flip = 0;
+
 
 
 

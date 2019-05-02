@@ -12,6 +12,6 @@ public:
 	Hand();
 	virtual ~Hand() = default;
 	void GetCard(Deck *);
-	void GetCard(int, Deck);
+	int NumOfCards();
 };
 

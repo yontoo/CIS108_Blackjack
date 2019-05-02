@@ -22,6 +22,10 @@ void Player::InitPlayer()
 	isDoubling = false;
 	isSplit = false;
 	hasHit = false;
+	while (!PlayerHand.curr_hand.empty())
+	{
+		PlayerHand.curr_hand.pop_back();
+	}
 }
 
 void Player::FillHand()
@@ -57,6 +61,7 @@ void Player::MakeBet()
 //Outputs current hand to player.
 void Player::ShowHand()
 {
+	hand_value = 0;
 	std::cout << "Your hand" << std::endl;
 	for (int x = 0; x < PlayerHand.curr_hand.size(); x++)
 	{
@@ -64,16 +69,6 @@ void Player::ShowHand()
 		hand_value += PlayerHand.curr_hand[x].GetVal();
 	}
 	
-	if (hand_value > 21)
-	{
-		lose = true;
-	}
-	else if (hand_value == 21)
-	{
-		win = true;
-	}
-	
-
 	//Determine if the player can split or not.
 	if (PlayerHand.curr_hand[0].GetVal() == PlayerHand.curr_hand[1].GetVal() && !hasHit)
 	{
@@ -102,159 +97,177 @@ void Player::AddSplitCard()
 	deck_ptr->deck.erase(deck_ptr->deck.begin());
 }
 
+bool Player::Lost()
+{
+	if (hand_value > 21)
+	{
+		std::cout << "Player busts." << std::endl;
+		return true;
+	}
+	return false;
+}
+
+bool Player::isBlackjack()
+{
+	return (hand_value == 21 && PlayerHand.NumOfCards() == 2);
+}
 
 
 //Provides menu to player.
-void Player::PlayerOptions()
-{
-	bool switching = true;
-	char choice;
-	if (!canSplit && canDouble && canGetCard)
-	{
-		while (switching)
-		{
-			switching = false;
-			std::cout << "1. Hit		| 2. Stand		| 3. Double		| 4. Surrender" << std::endl;
-			choice = _getch();
-			switch (choice)
-			{
-			case '1':
-			{
-				AddCard();
-				hasHit = true;
-				canDouble = false;
-				break;
-			}
-			case '2':
-			{
-				canGetCard = false;
-				isStanding = true;
-				break;
-			}
-			case '3':
-			{
-				Double();
-				break;
-			}
-
-			case '4':
-			{
-				Surrender();
-			}
-			default:
-				std::cout << "Select a valid choice." << std::endl << std::endl;
-				switching = true;
-
-			}
-		}
-	}
-	else if (canSplit && canDouble && canGetCard)
-	{
-		std::cout << "1. Hit		| 2. Stand		| 3. Double		| 4. Split		| 5. Surrender" << std::endl;
-		choice = _getch();
-		switch (choice)
-		{
-		case '1':
-		{
-			AddCard();
-			hasHit = true;
-			canDouble = false;
-			break;
-		}
-		case '2':
-		{
-			canGetCard = false;
-			isStanding = true;
-			break;
-		}
-		case '3':
-		{
-			Double();
-			break;
-		}
-
-		case '4':
-		{
-			Split();
-			break;
-		}
-		case '5':
-		{
-			Surrender();
-		}
-		default:
-			std::cout << "Select a valid choice." << std::endl << std::endl;
-			switching = true;
-		}
-	}
-	else if (canSplit && !canDouble && canGetCard)
-	{
-		std::cout << "1. Hit		| 2. Stand		| 3. Surrender		| 4. Split" << std::endl;
-		choice = _getch();
-		switch (choice)
-		{
-		case '1':
-		{
-			AddCard();
-			hasHit = true;
-			canDouble = false;
-			break;
-		}
-		case '2':
-		{
-			canGetCard = false;
-			isStanding = true;
-			break;
-		}
-		case '3':
-		{
-			Double();
-			break;
-		}
-
-		case '4':
-		{
-			Surrender();
-		}
-		default:
-			std::cout << "Select a valid choice." << std::endl << std::endl;
-			switching = true;
-
-		}
-	}
-	else
-	{
-		while (switching)
-		{
-			switching = false;
-			std::cout << "1. Hit		| 2. Stand		| 3. Surrender" << std::endl;
-			choice = _getch();
-			switch (choice)
-			{
-			case '1':
-			{
-				AddCard();
-				canDouble = false;
-				break;
-			}
-			case '2':
-			{
-				canGetCard = false;
-				isStanding = true;
-				break;
-			}
-			case '3':
-			{
-				Surrender();
-			}
-			default:
-				std::cout << "Select a valid choice." << std::endl << std::endl;
-				switching = true;
-			}
-		}
-	}
-
-}
+//void Player::PlayerOptions()
+//{
+//	bool switching = true;
+//	char choice;
+//	if (!canGetCard)
+//	{
+//		return;
+//	}
+//	if (!canSplit && canDouble && canGetCard)
+//	{
+//		while (switching)
+//		{
+//			switching = false;
+//			std::cout << "1. Hit		| 2. Stand		| 3. Double		| 4. Surrender" << std::endl;
+//			choice = _getch();
+//			switch (choice)
+//			{
+//			case '1':
+//			{
+//				AddCard();
+//				hasHit = true;
+//				canDouble = false;
+//				break;
+//			}
+//			case '2':
+//			{
+//				canGetCard = false;
+//				isStanding = true;
+//				break;
+//			}
+//			case '3':
+//			{
+//				Double();
+//				break;
+//			}
+//
+//			case '4':
+//			{
+//				Surrender();
+//			}
+//			default:
+//				std::cout << "Select a valid choice." << std::endl << std::endl;
+//				switching = true;
+//
+//			}
+//		}
+//	}
+//	else if (canSplit && canDouble && canGetCard)
+//	{
+//		std::cout << "1. Hit		| 2. Stand		| 3. Double		| 4. Split		| 5. Surrender" << std::endl;
+//		choice = _getch();
+//		switch (choice)
+//		{
+//		case '1':
+//		{
+//			AddCard();
+//			hasHit = true;
+//			canDouble = false;
+//			break;
+//		}
+//		case '2':
+//		{
+//			canGetCard = false;
+//			isStanding = true;
+//			break;
+//		}
+//		case '3':
+//		{
+//			Double();
+//			break;
+//		}
+//
+//		case '4':
+//		{
+//			Split();
+//			break;
+//		}
+//		case '5':
+//		{
+//			Surrender();
+//		}
+//		default:
+//			std::cout << "Select a valid choice." << std::endl << std::endl;
+//			switching = true;
+//		}
+//	}
+//	else if (canSplit && !canDouble && canGetCard)
+//	{
+//		std::cout << "1. Hit		| 2. Stand		| 3. Surrender		| 4. Split" << std::endl;
+//		choice = _getch();
+//		switch (choice)
+//		{
+//		case '1':
+//		{
+//			AddCard();
+//			hasHit = true;
+//			canDouble = false;
+//			break;
+//		}
+//		case '2':
+//		{
+//			canGetCard = false;
+//			isStanding = true;
+//			break;
+//		}
+//		case '3':
+//		{
+//			Double();
+//			break;
+//		}
+//
+//		case '4':
+//		{
+//			Surrender();
+//		}
+//		default:
+//			std::cout << "Select a valid choice." << std::endl << std::endl;
+//			switching = true;
+//
+//		}
+//	}
+//	else
+//	{
+//		while (switching)
+//		{
+//			switching = false;
+//			std::cout << "1. Hit		| 2. Stand		| 3. Surrender" << std::endl;
+//			choice = _getch();
+//			switch (choice)
+//			{
+//			case '1':
+//			{
+//				AddCard();
+//				canDouble = false;
+//				break;
+//			}
+//			case '2':
+//			{
+//				canGetCard = false;
+//				isStanding = true;
+//				break;
+//			}
+//			case '3':
+//			{
+//				Surrender();
+//			}
+//			default:
+//				std::cout << "Select a valid choice." << std::endl << std::endl;
+//				switching = true;
+//			}
+//		}
+//	}
+//
+//}
 
 
 
@@ -263,11 +276,17 @@ void Player::GetDeck(Deck * DeckIn)
 	deck_ptr = DeckIn;
 }
 
+void Player::Stand()
+{
+	canGetCard = false;
+}
+
 void Player::Surrender()
 {
 	std::cout << "Player surrendered, returning $" << (bet / 2) << std::endl;
 	cash += (bet / 2);
-	lose = true;
+	hand_value = 22;
+	Lost();
 	//for (int x = 0; x <= PlayerHand.curr_hand.size() + 1; x++)
 	while (!PlayerHand.curr_hand.empty())
 	{
@@ -293,18 +312,6 @@ void Player::Split()
 	PlayerHand.curr_hand.erase(PlayerHand.curr_hand.begin() + 1);
 	AddCard();
 	AddSplitCard();
-}
-
-
-void Player::Gameflow()
-{
-	 do {
-		ShowHand();
-		PlayerOptions();
-		hand_value = 0;
-	} while (!lose);
-	lose = false;
-	InitPlayer();
 }
 
 int Player::GetHandVal()
