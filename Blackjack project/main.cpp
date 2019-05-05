@@ -7,6 +7,8 @@
 #include "Player.h"
 #include "Dealer.h"
 
+
+
 int main()
 {
 	std::cout << "Press space to play." << std::endl;
@@ -23,14 +25,22 @@ int main()
 			Dealer Joe;
 			User.GetDeck(&deckone);
 			Joe.GetDeck(&deckone);
-
 			User.MakeBet();
 			while (true)
 			{
+				if (deckone.deck.size() < 4)
+				{
+					deckone.RefillDeck();
+				}
+				if (new_hand)
+				{
+					User.ResetBet();
+					User.MakeBet();
+				}
 				new_hand = false;
 				User.InitPlayer();
 				Joe.InitPlayer();
-				Joe.card_to_flip = 0;
+				Joe.SetC2F(0);
 				User.FillHand();
 				Joe.FillHand();
 				User.ShowHand();
@@ -38,6 +48,7 @@ int main()
 				{
 
 					std::cout << "Player blackjack!" << std::endl;
+					User.SetCashWin();
 					std::cout << "Play a new hand? (y/n)\n\n";
 					while (true)
 					{
@@ -99,11 +110,24 @@ int main()
 							{
 							case '1':
 							{
+								if (deckone.deck.size() < 4)
+								{
+									deckone.RefillDeck();
+									std::cout << "Refilling and shuffling deck, one moment." << std::endl;
+									Sleep(1000);
+									std::cout << "Deck filled. Resume game." << std::endl << std::endl;
+								}
 								User.AddCard();
 								User.ShowHand();
 								if (User.GetHandVal() > 21)
 								{
 									std::cout << "Player busts." << std::endl;
+									break;
+								}
+								if (User.GetHandVal() == 21)
+								{
+									User.SetCashWin();
+									std::cout << "Player blackjack!" << std::endl;
 									break;
 								}
 								switching = true;
@@ -112,9 +136,10 @@ int main()
 							case '2':
 							{
 								User.Stand();
-								Joe.Dealerflow(User);
+								Joe.Dealerflow(&User);
 								if (User.GetHandVal() > Joe.GetHandVal() && User.GetHandVal() <= 21)
 								{
+									User.SetCashWin();
 									std::cout << "Player value is higher than Dealer, Player wins." << std::endl;
 								}
 								continue;
@@ -122,6 +147,26 @@ int main()
 							case '3':
 							{
 								User.Surrender();
+								std::cout << "Play a new hand? (y/n)\n\n";
+								while (true)
+								{
+									char choice = _getch();
+									if (choice == 'y')
+									{
+										new_hand = true;
+										break;
+									}
+									else if (choice == 'n')
+									{
+										std::cout << "\n\nClosing";
+										Sleep(1000);
+										return 0;
+									}
+									else
+									{
+										std::cout << "select a valid choice." << std::endl;
+									}
+								}
 							}
 							default:
 								std::cout << "Select a valid choice." << std::endl << std::endl;

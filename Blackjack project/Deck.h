@@ -11,6 +11,7 @@ public:
 	void InitDeck();
 	void FillDeck();
 	void ShuffleDeck();
+	void RefillDeck();
 	Card GiveCard();
 	Deck();
 	virtual ~Deck() = default;

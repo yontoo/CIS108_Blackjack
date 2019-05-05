@@ -13,7 +13,6 @@ Player::~Player()
 
 void Player::InitPlayer()
 {
-	bet = 0;
 	hand_value = 0;
 	canGetCard = true;
 	canDouble = true;
@@ -68,19 +67,18 @@ void Player::ShowHand()
 		PlayerHand.curr_hand[x].FullCard();
 		hand_value += PlayerHand.curr_hand[x].GetVal();
 	}
-	
-	//Determine if the player can split or not.
-	if (PlayerHand.curr_hand[0].GetVal() == PlayerHand.curr_hand[1].GetVal() && !hasHit)
-	{
-		canSplit = true;
-	}
 	std::cout << "______________________________" << std::endl;
 	std::cout << "Hand value: " << hand_value << std::endl << std::endl;
-	if (isSplit)
-	{
-		std::cout << "______________________________" << std::endl;
-		std::cout << "Split hand value: " << hand_value << std::endl;
-	}
+	//Determine if the player can split or not.
+	//if (PlayerHand.curr_hand[0].GetVal() == PlayerHand.curr_hand[1].GetVal() && !hasHit)
+	//{
+	//	canSplit = true;
+	//}
+	//if (isSplit)
+	//{
+	//	std::cout << "______________________________" << std::endl;
+	//	std::cout << "Split hand value: " << hand_value << std::endl;
+	//}
 }
 
 
@@ -91,21 +89,21 @@ void Player::AddCard()
 }
 
 //Fundamentally the same as the previous add function, this just adds to the split hand instead.
-void Player::AddSplitCard()
-{
-	SplitHand.GetCard(deck_ptr);
-	deck_ptr->deck.erase(deck_ptr->deck.begin());
-}
+//void Player::AddSplitCard()
+//{
+//	SplitHand.GetCard(deck_ptr);
+//	deck_ptr->deck.erase(deck_ptr->deck.begin());
+//}
 
-bool Player::Lost()
-{
-	if (hand_value > 21)
-	{
-		std::cout << "Player busts." << std::endl;
-		return true;
-	}
-	return false;
-}
+//bool Player::Lost()
+//{
+//	if (hand_value > 21)
+//	{
+//		std::cout << "Player busts." << std::endl;
+//		return true;
+//	}
+//	return false;
+//}
 
 bool Player::isBlackjack()
 {
@@ -281,45 +279,39 @@ void Player::Stand()
 	canGetCard = false;
 }
 
+
 void Player::Surrender()
 {
 	std::cout << "Player surrendered, returning $" << (bet / 2) << std::endl;
 	cash += (bet / 2);
-	hand_value = 22;
-	Lost();
-	//for (int x = 0; x <= PlayerHand.curr_hand.size() + 1; x++)
-	while (!PlayerHand.curr_hand.empty())
-	{
-		PlayerHand.curr_hand.pop_back();
-	}
 }
 
-void Player::Double()
-{
-	canDouble = false;
-	bet += bet;
-	cash -= bet;
-	std::cout << "Player doubling.\nCash: " << cash << "\nCurrent bet: " << bet << std::endl;
-	isStanding = true;
-}
+//void Player::Double()
+//{
+//	canDouble = false;
+//	bet += bet;
+//	cash -= bet;
+//	std::cout << "Player doubling.\nCash: " << cash << "\nCurrent bet: " << bet << std::endl;
+//	isStanding = true;
+//}
 
 
 //Move card at index 1 of Player's hand to new hand, clear out the empty index left by the move and add one card to each new hand.
-void Player::Split()
-{
-	isSplit = true;
-	SplitHand.curr_hand.push_back(std::move(PlayerHand.curr_hand[1]));
-	PlayerHand.curr_hand.erase(PlayerHand.curr_hand.begin() + 1);
-	AddCard();
-	AddSplitCard();
-}
+//void Player::Split()
+//{
+//	isSplit = true;
+//	SplitHand.curr_hand.push_back(std::move(PlayerHand.curr_hand[1]));
+//	PlayerHand.curr_hand.erase(PlayerHand.curr_hand.begin() + 1);
+//	AddCard();
+//	AddSplitCard();
+//}
 
 int Player::GetHandVal()
 {
 	return hand_value;
 }
 
-bool Player::GetIsStanding()
-{
-	return isStanding;
-}
+//bool Player::GetIsStanding()
+//{
+//	return isStanding;
+//}

@@ -92,6 +92,17 @@ void Deck::ShuffleDeck()
 	std::shuffle(std::begin(deck), std::end(deck), rng);
 }
 
+void Deck::RefillDeck()
+{
+	while (!deck.empty())
+	{
+		deck.pop_back();
+	}
+	FillDeck();
+	ShuffleDeck();
+	
+}
+
 void Deck::InitDeck()
 {
 	FillDeck();

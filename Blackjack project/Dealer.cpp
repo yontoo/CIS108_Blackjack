@@ -34,26 +34,35 @@ void Dealer::GetDeck(Deck * DeckIn)
 	deck_ptr = DeckIn;
 }
 
-void Dealer::Dealerflow(Player PlayerIn)
+void Dealer::Dealerflow(Player * PlayerIn)
 {
-	while (hand_value <= 17)
+	//Dealer pulls until hand value is at or over 17
+	while (hand_value <= 16)
 	{
 		FlipCard();
-		if (hand_value > PlayerIn.GetHandVal() && hand_value <= 21)
+		if (hand_value > PlayerIn->GetHandVal() && hand_value <= 21)
 		{
 			std::cout << "Dealer value higher than Player, Dealer wins." << std::endl;
 			return;
 		}
-		if (hand_value == PlayerIn.GetHandVal())
+		if (hand_value == PlayerIn->GetHandVal() && hand_value >= 17)
 		{
 			std::cout << "Push." << std::endl;
 			return;
+		}
+		if (deck_ptr->deck.size() < 4)
+		{
+			deck_ptr->RefillDeck();
+			std::cout << "Refilling and shuffling deck, one moment." << std::endl;
+			Sleep(1000);
+			std::cout << "Deck filled. Resume game." << std::endl << std::endl;
 		}
 		AddCard();
 		Sleep(1000);
 	}
 	if (hand_value > 21)
 	{
+		PlayerIn->SetCashWin();
 		std::cout << "Dealer bust." << std::endl;
 		return;
 	}
